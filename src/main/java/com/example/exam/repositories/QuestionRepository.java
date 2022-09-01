@@ -10,8 +10,7 @@ import java.util.List;
 public interface QuestionRepository extends CrudRepository<Question, Integer> {
 
 
-    @Query("select questions from Exam e where e.id = ?1")
-    List<Question> getQuestionsByExam(Integer id);
+    List<Question> findAllByExam_Id(int id);
 
     List<Question> findQuestionsById(Integer id);
 

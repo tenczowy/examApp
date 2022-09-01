@@ -28,7 +28,7 @@ public class QuestionController {
 
     @GetMapping(path="/questionsForExam")
     public @ResponseBody List<Question> questionsForExam(@RequestParam Integer id){
-        return questionRepository.getQuestionsByExam(id);
+        return questionRepository.findAllByExam_Id(id);
     }
 
     //DELETE QUESTION BY ID
