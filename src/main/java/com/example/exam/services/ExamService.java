@@ -12,4 +12,6 @@ public interface ExamService {
     Iterable<Exam> selectExam(String name);
 
     Iterable<Exam> findAll();
+
+    String delete(int id);
 }

@@ -1,7 +1,9 @@
 package com.example.exam.services;
 
 import com.example.exam.models.Exam;
+import com.example.exam.repositories.AnswerRepository;
 import com.example.exam.repositories.ExamRepository;
+import com.example.exam.repositories.QuestionRepository;
 import org.springframework.stereotype.Service;
 
 
@@ -9,9 +11,13 @@ import org.springframework.stereotype.Service;
 public class ExamServiceImpl implements ExamService {
 
     private final ExamRepository examRepository;
+    private final QuestionRepository questionRepository;
+    private final AnswerRepository answerRepository;
 
-    public ExamServiceImpl(ExamRepository examRepository) {
+    public ExamServiceImpl(ExamRepository examRepository, QuestionRepository questionRepository, AnswerRepository answerRepository) {
         this.examRepository = examRepository;
+        this.questionRepository = questionRepository;
+        this.answerRepository = answerRepository;
     }
 
 
@@ -31,6 +37,14 @@ public class ExamServiceImpl implements ExamService {
     @Override
     public Iterable<Exam> findAll() {
             return examRepository.findAll();
+    }
+
+    @Override
+    public String delete(int id) {
+        answerRepository.deleteAnswersByQuestion_Exam_Id(id);
+        questionRepository.deleteQuestionsByExam_Id(id);
+        examRepository.deleteById(id);
+        return "Exam deleted successfully!";
     }
 
 

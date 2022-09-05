@@ -20,6 +20,9 @@ public interface QuestionRepository extends CrudRepository<Question, Integer> {
 
     Question findQuestionById(Integer id);
 
+    List<Question> deleteQuestionsByExam_Id(int id);
+
+
 
 
 

@@ -10,4 +10,6 @@ import java.util.List;
 
 public interface AnswerRepository extends CrudRepository<Answer, Integer> {
     List<Answer> findAnswerById(Integer id);
+
+    List<Answer> deleteAnswersByQuestion_Exam_Id(int id);
 }

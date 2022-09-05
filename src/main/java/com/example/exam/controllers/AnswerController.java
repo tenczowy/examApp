@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(path="answer")
+@RequestMapping(path = "answer")
 public class AnswerController {
 
     private final AnswerService answerService;
@@ -17,19 +17,19 @@ public class AnswerController {
         this.answerService = answerService;
     }
 
-        @GetMapping(path = "/select/{id}")
-    public @ResponseBody List<Answer> selectAnswer(@PathVariable int id){
-            return answerService.selectAnswer(id);
+    @GetMapping(path = "/select/{id}")
+    public @ResponseBody List<Answer> selectAnswer(@PathVariable int id) {
+        return answerService.selectAnswer(id);
     }
 
-        @PostMapping(path="/deleteAnswer")
-    public String deleteAnswer(@RequestParam Integer id){
+    @PostMapping(path = "/deleteAnswer")
+    public String deleteAnswer(@RequestParam Integer id) {
         return answerService.deleteAnswer(id);
     }
 
     //JSON example   {"question_id":27,"answer":"Maybe now?????", "correct":false}
-    @PostMapping(path="/saveAnswer")
-    public Answer saveAnswer(@RequestBody AnswerRequest answerRequest){
+    @PostMapping(path = "/saveAnswer")
+    public Answer saveAnswer(@RequestBody AnswerRequest answerRequest) {
         return answerService.saveAnswer(answerRequest);
     }
 
