@@ -2,84 +2,46 @@ package com.example.exam.controllers;
 
 
 import com.example.exam.Pojos.QuestionRequest;
-import com.example.exam.models.Exam;
 import com.example.exam.models.Question;
-import com.example.exam.repositories.ExamRepository;
-import com.example.exam.repositories.QuestionRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.exam.services.QuestionService;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping(path="question")
+@RequestMapping(path = "question")
 public class QuestionController {
 
-    @Autowired
-    private QuestionRepository questionRepository;
-    @Autowired
-    private ExamRepository examRepository;
+    private final QuestionService questionService;
 
-
-    @GetMapping(path="/select")
-    public @ResponseBody List<Question> selectExam(@RequestParam Integer id){
-        return questionRepository.findQuestionsById(id);
+    public QuestionController(QuestionService questionService) {
+        this.questionService = questionService;
     }
 
-    @GetMapping(path="/questionsForExam")
-    public @ResponseBody List<Question> questionsForExam(@RequestParam Integer id){
-        return questionRepository.findAllByExam_Id(id);
+    @GetMapping(path = "/select")
+    public @ResponseBody List<Question> selectExam(@RequestParam Integer id) {
+        return questionService.selectExam(id);
     }
 
-    //DELETE QUESTION BY ID
-    @PostMapping(path="/deleteQuestion")
-    public @ResponseBody String deleteQuestion(@RequestParam Integer id){
-        questionRepository.deleteById(id);
-        return "Question deleted successfully.";
+    @GetMapping(path = "/questionsForExam")
+    public @ResponseBody List<Question> questionsForExam(@RequestParam Integer id) {
+        return questionService.questionsForExam(id);
     }
 
-
-    //QUESTION OBJECT
-    @PostMapping(path="/saveQuestion2")
-    public Question saveQuestion2(@RequestBody Question question){
-        return questionRepository.save(question);
+    @PostMapping(path = "/deleteQuestion")
+    public @ResponseBody String deleteQuestion(@RequestParam Integer id) {
+        return questionService.deleteQuestion(id);
     }
 
-    //JSON version
-    @PostMapping(path="/addQuestion2")
-    public Question addQuestion(@RequestBody QuestionRequest questionRequest){
-
-        Exam exam = examRepository.findById(questionRequest.exam_id);
-
-        Question question = new Question();
-        question.setQuestion(questionRequest.question_name);
-        question.setExam(exam);
-
-        return questionRepository.save(question);
-
+    @PostMapping(path = "/addQuestion")
+    public Question addQuestion(@RequestBody QuestionRequest questionRequest) {
+        return questionService.addQuestion(questionRequest);
     }
 
-
-    //PARAM VERSION
-    @PostMapping(path="/addQuestion")
-    public Question addQuestion2(@RequestParam String question_name, int exam_id){
-
-        Exam exam = examRepository.findById(exam_id);
-
-        Question question = new Question();
-        question.setQuestion(question_name);
-        question.setExam(exam);
-
-        return questionRepository.save(question);
-
+    @PostMapping(path = "/addQuestionParam")
+    public Question addQuestionParam(@RequestParam String question_name, int exam_id) {
+        return questionService.addQuestionParam(question_name, exam_id);
     }
-
-
-
-
-
-
-
-
-
 }
