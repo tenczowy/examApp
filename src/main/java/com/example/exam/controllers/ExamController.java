@@ -2,8 +2,12 @@ package com.example.exam.controllers;
 
 import com.example.exam.models.Exam;
 import com.example.exam.services.ExamService;
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.transaction.UnexpectedRollbackException;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 @RestController
 @RequestMapping(path="exam")
@@ -27,11 +31,10 @@ public class ExamController {
         return examService.selectExam(name);
     }
 
-
-    @Transactional
+    @Transactional(propagation = Propagation.NOT_SUPPORTED)
     @PostMapping(path="/delete/{id}")
     public String deleteExam(@PathVariable int id){
-        return examService.delete(id);
+            return examService.delete(id);
     }
 
     @GetMapping(path = "/list")
