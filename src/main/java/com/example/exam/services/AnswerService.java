@@ -1,6 +1,6 @@
 package com.example.exam.services;
 
-import com.example.exam.Pojos.AnswerRequest;
+import com.example.exam.DAO.AnswerRequest;
 import com.example.exam.models.Answer;
 
 import java.util.List;

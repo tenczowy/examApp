@@ -1,11 +1,11 @@
 package com.example.exam.controllers;
 
 
-import com.example.exam.Pojos.QuestionRequest;
+import com.example.exam.DAO.QuestionRequest;
 import com.example.exam.models.Question;
 import com.example.exam.services.QuestionService;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,17 +25,19 @@ public class QuestionController {
         return questionService.selectExam(id);
     }
 
-    @GetMapping(path = "/questionsForExam")
-    public @ResponseBody List<Question> questionsForExam(@RequestParam Integer id) {
+    @GetMapping(path = "/questionsForExam/{id}")
+    public @ResponseBody List<Question> questionsForExam(@PathVariable Integer id) {
         return questionService.questionsForExam(id);
     }
 
-    @PostMapping(path = "/deleteQuestion")
-    public @ResponseBody String deleteQuestion(@RequestParam Integer id) {
+
+    @Transactional(propagation = Propagation.NOT_SUPPORTED)
+    @PostMapping(path = "/delete/{id}")
+    public @ResponseBody String deleteQuestion(@PathVariable Integer id) {
         return questionService.deleteQuestion(id);
     }
 
-    @PostMapping(path = "/addQuestion")
+    @PostMapping(path = "/add")
     public Question addQuestion(@RequestBody QuestionRequest questionRequest) {
         return questionService.addQuestion(questionRequest);
     }

@@ -1,10 +1,11 @@
 package com.example.exam.services;
 
-import com.example.exam.Pojos.AnswerRequest;
+import com.example.exam.DAO.AnswerRequest;
 import com.example.exam.models.Answer;
 import com.example.exam.models.Question;
 import com.example.exam.repositories.AnswerRepository;
 import com.example.exam.repositories.QuestionRepository;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -27,8 +28,12 @@ public class AnswerServiceImp implements AnswerService{
 
     @Override
     public String deleteAnswer(Integer id) {
-        answerRepository.deleteById(id);
-        return "answer deleted successfully!";
+        try{
+            answerRepository.deleteById(id);
+            return "answer deleted successfully!";
+        }catch (EmptyResultDataAccessException e){
+            return "Answer not found.";
+        }
     }
 
     @Override

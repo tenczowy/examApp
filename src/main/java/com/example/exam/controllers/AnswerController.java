@@ -1,6 +1,6 @@
 package com.example.exam.controllers;
 
-import com.example.exam.Pojos.AnswerRequest;
+import com.example.exam.DAO.AnswerRequest;
 import com.example.exam.models.Answer;
 import com.example.exam.services.AnswerService;
 import org.springframework.web.bind.annotation.*;
@@ -22,13 +22,13 @@ public class AnswerController {
         return answerService.selectAnswer(id);
     }
 
-    @PostMapping(path = "/deleteAnswer")
-    public String deleteAnswer(@RequestParam Integer id) {
+    @PostMapping(path = "/delete/{id}")
+    public String deleteAnswer(@PathVariable Integer id) {
         return answerService.deleteAnswer(id);
     }
 
     //JSON example   {"question_id":27,"answer":"Maybe now?????", "correct":false}
-    @PostMapping(path = "/saveAnswer")
+    @PostMapping(path = "/add")
     public Answer saveAnswer(@RequestBody AnswerRequest answerRequest) {
         return answerService.saveAnswer(answerRequest);
     }

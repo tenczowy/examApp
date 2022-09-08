@@ -1,4 +1,4 @@
-package com.example.exam.Pojos;
+package com.example.exam.DAO;
 
 public class AnswerRequest{
                 public String answer;

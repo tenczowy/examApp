@@ -1,8 +1,7 @@
 package com.example.exam.services;
 
-import com.example.exam.Pojos.QuestionRequest;
+import com.example.exam.DAO.QuestionRequest;
 import com.example.exam.models.Question;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
