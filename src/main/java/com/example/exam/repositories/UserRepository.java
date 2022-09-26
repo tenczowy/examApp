@@ -1,6 +1,7 @@
 package com.example.exam.repositories;
 
 import com.example.exam.models.User;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
@@ -15,4 +16,9 @@ public interface UserRepository extends CrudRepository<User, Long> {
 
     Optional<User> findByEmail(String email);
 
+    @Transactional
+    @Modifying
+    @Query("UPDATE User a " +
+            "SET a.enabled = TRUE WHERE a.email = ?1")
+    int enableUser(String mail);
 }

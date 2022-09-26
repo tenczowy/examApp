@@ -12,4 +12,6 @@ public interface UserService{
     UserDetails loadUserByUsername(String email);
 
     String signUpUser(User user);
+
+    int enableUser(String mail);
 }
